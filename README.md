@@ -1,11 +1,9 @@
-<!--
-# asyncqueue
+# asyncqueue-ts
 
-[![npm version](https://img.shields.io/npm/v/asyncqueue.svg)](https://www.npmjs.com/package/asyncqueue)  
-[![License](https://img.shields.io/npm/l/asyncqueue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/asyncqueue-ts.svg)](https://www.npmjs.com/package/asyncqueue-ts)  
+[![License](https://img.shields.io/npm/l/asyncqueue-ts.svg)](LICENSE)
 
 ---
---->
 ## Description
 
 `asyncqueue` is a lightweight, zero-dependency, fully TypeScript-typed library for managing asynchronous tasks with ease and precision. It offers:
