@@ -8,8 +8,8 @@ export class AsyncQueue {
   private paused = false;
 
   constructor(options: QueueOptions = {}) {
-    this.maxConcurrent = options.maxConcurrent || 5;
-    this.defaultRetries = options.defaultRetries || 0;
+    this.maxConcurrent = Number.isFinite(options.maxConcurrent) ? options.maxConcurrent! : 5;
+    this.defaultRetries = Number.isInteger(options.defaultRetries) ? options.defaultRetries! : 0;
   }
 
   public add<T>(fn: TaskFunction<T>, priority = 0, retries = this.defaultRetries): Promise<T> {
@@ -34,13 +34,14 @@ export class AsyncQueue {
   private async process() {
     while (!this.paused && this.runningCount < this.maxConcurrent && this.queue.length > 0) {
       const task = this.queue.shift();
-      if (!task) return;
+      if (!task) return;     
 
       this.runningCount++;
 
       try {
         const result = await task.fn();
         task.resolve(result);
+        console.log(result);
       } catch (err) {
         if (task.retries > 0) {
           task.retries--;
@@ -55,4 +56,17 @@ export class AsyncQueue {
       }
     }
   }
+
+  public getSize(): number {
+    return this.queue.length;
+  }
+  
+  public isIdle(): boolean {
+    return this.queue.length === 0 && this.runningCount === 0;
+  }
+  
+  public clear(): void {
+    this.queue = [];
+  }
+
 }
